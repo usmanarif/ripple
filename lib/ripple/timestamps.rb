@@ -11,15 +11,15 @@ module Ripple
       # Adds the :created_at and :updated_at timestamp properties to
       # the document.
       def timestamps!(options={})
-        property :created_at, Time, options.merge(:default => proc { Time.now })
-        property :updated_at, Time, options.dup
+        property :created_at, String, options.merge(:default => proc { Time.now.to_i*1000 })
+        property :updated_at, String, options.dup
         before_save :touch
       end
     end
 
     # Sets the :updated_at attribute before saving the document.
     def touch
-      self.updated_at = Time.now
+      self.updated_at = Time.now.to_i*1000
     end
   end
 end
